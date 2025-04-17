@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Description from "./components/Destription/Description";
+import Description from "./components/Description/Description";
 import Options from "./components/Options/Options";
 import Feedback from "./components/Feedback/Feedback";
 import Notification from "./components/Notification/Notification";
@@ -20,11 +20,11 @@ function App() {
   });
 
   const totalFeedback = state.good + state.neutral + state.bad;
+  const positive = Math.round((state.good / totalFeedback) * 100);
 
   const updateFeedback = (feedbackType) => {
     if (feedbackType === "reset") {
       setState(startData);
-      window.localStorage.removeItem("stats");
       return;
     }
     setState((prevState) => ({
@@ -48,7 +48,15 @@ function App() {
         updateFunction={updateFeedback}
         totalFeedback={totalFeedback}
       />
-      {totalFeedback > 0 ? <Feedback feedback={state} /> : <Notification />}
+      {totalFeedback > 0 ? (
+        <Feedback
+          feedback={state}
+          totalFeedback={totalFeedback}
+          positive={positive}
+        />
+      ) : (
+        <Notification />
+      )}
     </>
   );
 }

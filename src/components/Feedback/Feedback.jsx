@@ -1,8 +1,6 @@
 import css from "./Feedback.module.css";
 
-export default function Feedback({ feedback }) {
-  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
-  const positive = Math.round((feedback.good / totalFeedback) * 100);
+export default function Feedback({ feedback, totalFeedback, positive }) {
   return (
     <ul className={css.feedback}>
       {Object.entries(feedback).map(([key, value]) => {
